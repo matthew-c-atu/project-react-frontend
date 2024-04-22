@@ -1,4 +1,5 @@
 import './App.css'
+import Transport from './Transport'
 
 // import Transport from './Transport.jsx'
 
@@ -22,6 +23,7 @@ export default function App() {
       </div>
       <h1>Music Player</h1>
       <HelloText />
+      <Transport />
     </>
   )
 }
