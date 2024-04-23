@@ -30,6 +30,17 @@ const handlePlayClick = () => {
     // TODO: Add more stuff
 }
 
+const notifyPlay = () => {
+  if (!playing) {
+    setPlaying(true);
+    console.log("Playing...")
+  }
+  else {
+    setPlaying(false);
+    console.log("Pausing...")
+  }
+}
+
 const handleSeekBackwardClick = () => {
   if (playing) {
     setPlaying(false);
