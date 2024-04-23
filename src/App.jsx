@@ -1,5 +1,6 @@
 import './App.css'
 import Transport from './Transport'
+import Search from './Search'
 
 // import Transport from './Transport.jsx'
 
@@ -10,6 +11,7 @@ export default function App() {
 
   return (
     <>
+      <Search />
       <div>
         <a href="https://vitejs.dev" target="_blank">
           <img src={playerLogo} className="logo" alt="Vite logo" />
