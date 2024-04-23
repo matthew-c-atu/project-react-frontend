@@ -1,0 +1,17 @@
+.searchBg {
+  background-color: white;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-template-columns: 10%, 80%, 10%;
+}
+
+
+.grid-item-search {
+  grid-row-start: 1;
+  grid-row-end: 1;
+  grid-column-start: 2;
+  grid-column-end: 3;
+}
