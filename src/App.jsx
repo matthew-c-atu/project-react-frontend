@@ -7,7 +7,6 @@ import Search from './Search'
 const playerLogo = "https://image.similarpng.com/very-thumbnail/2020/12/Popular-Music-icon-in-round-black-color-on-transparent-background-PNG.png" 
 
 export default function App() {
-  // const [count, setCount] = useState(0)
 
   return (
     <>
