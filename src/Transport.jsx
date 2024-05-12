@@ -24,7 +24,7 @@ const togglePlaying = (val) => {
 
 const handlePlayClick = () => {
   var audio = document.getElementById('hlsAudio');
-  if (!playing) {
+  if (audio.paused) {
     togglePlaying(true);
     setCurrentPlayIcon(pauseUrl);
     console.log("Playing...")
@@ -107,6 +107,15 @@ const startAutoScroll = () => {
     }, 100);
 }
 
+// const syncPlayIcon = () => {
+//     var audio = document.getElementById('hlsAudio');
+//     if (!audio.paused) {
+//       setCurrentPlayIcon(i => playUrl);
+//     } else {
+//       setCurrentPlayIcon(i => pauseUrl);
+//     }
+  // }
+
 const loadHls = (songUrl) => {
     var audio = document.getElementById('hlsAudio');
     if (Hls.isSupported()) {
@@ -122,6 +131,7 @@ const loadHls = (songUrl) => {
     hls.loadSource(songUrl);
     // bind them together
     hls.attachMedia(audio);
+      setPlaying(p => true)
   }}
 
 useEffect(() => {
@@ -131,11 +141,12 @@ useEffect(() => {
 
 useEffect(() => {
   console.log("playing is: ", playing)
+    // syncPlayIcon()
 },[playing]);
 
 useEffect(() => {
     loadHls(currentSong);
-    playOnLoad();
+    // playOnLoad();
 },[currentSong]);
 
   return (
@@ -168,7 +179,7 @@ useEffect(() => {
             </div>
           </div>
 
-          <video id="hlsAudio" hidden={true} onPlay={startAutoScroll}></video>
+          <video id="hlsAudio" hidden={true} autoPlay onPlay={startAutoScroll}></video>
 
       </div>
 

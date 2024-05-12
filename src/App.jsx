@@ -21,7 +21,9 @@ const setFooHandler = (val) => {
 const setSongsHandler = (obj) => {
   console.log("Trying to set songs...")
   console.log(obj)
-  setSongs(s => obj)
+  if (obj != null) {
+    setSongs(s => obj)
+    }
 }
 
 const updateCurrentSongHandler = (val) => {

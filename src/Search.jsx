@@ -10,7 +10,7 @@ export default function Search({fooState, updateSongsHandler, passFooHandler, se
   const queryDatabase = (query) => {
 
     let jsonObj;
-    const response = fetch(databaseSearchUrl, {
+    const response = fetch(databaseSearchUrl + "?" + new URLSearchParams({name:query}), {
       method: "GET",
     })
     .then((response) => response.json())
@@ -36,17 +36,18 @@ export default function Search({fooState, updateSongsHandler, passFooHandler, se
   const handleSearchClick = (query) => {
     console.log("Search query executed.")
     const text = document.getElementById("searchTextBox");
+    queryDatabase(text.value);
     text.value = "";
-    queryDatabase();
   }
 
   
   const handleTextSubmit = event => {
     console.log('handleSubmit ran');
     event.preventDefault(); 
-    document.getElementById("searchTextBox").value = "";
 
-    queryDatabase();
+    const text = document.getElementById("searchTextBox");
+    queryDatabase(text.value);
+    text.value = "";
 
   };
 
