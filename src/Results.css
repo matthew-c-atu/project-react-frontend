@@ -1,0 +1,25 @@
+input {
+  width: 100%;
+}
+
+.resultsBg {
+  background-color: lightgray;
+  padding: 5px;
+  height: 500px;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+/* .resultsContainer {} */
+
+.songResult {
+  background-color: lightblue;
+  padding: 10px;
+}
+
+li {
+  background-color: lightblue;
+  padding: 5px;
+  border: lightblue;
+
+}
