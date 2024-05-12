@@ -7,10 +7,13 @@ const pauseUrl = "https://i.pinimg.com/originals/e5/96/0e/e5960e813b505af997f745
 const seekForwardUrl = "http://icons.iconarchive.com/icons/icons8/windows-8/512/Media-Controls-Fast-Forward-icon.png"
 const seekBackwardUrl = "https://cdn0.iconfinder.com/data/icons/playback-1/24/rewind-512.png"
 
+var hlsPlaylist="http://localhost:9001/Binary%20-%20Symptome.m3u8"
+// var hlsPlaylist="http://localhost:8080/hls/Binary%20-%20Symptome.m3u8"
+
 
 const playFilepath = "./assets/play.png"
 
-export default function Transport() {
+export default function Transport({currentSong}) {
 
 const [playing, setPlaying] = useState(false)
 const [currentPlayIcon, setCurrentPlayIcon] = useState(playUrl)
@@ -21,7 +24,7 @@ const togglePlaying = (val) => {
 
 const handlePlayClick = () => {
   var audio = document.getElementById('hlsAudio');
-  if (!playing) {
+  if (audio.paused) {
     togglePlaying(true);
     setCurrentPlayIcon(pauseUrl);
     console.log("Playing...")
@@ -70,6 +73,13 @@ const handleSeekMouseUp = () => {
     handlePlayClick();
 }
 
+  const playOnLoad = () => {
+    var audio = document.getElementById('hlsAudio');
+    togglePlaying(true);
+    setCurrentPlayIcon(pauseUrl);
+    audio.play();
+  }
+
 const handleSeekMove = () => {
     var audio = document.getElementById('hlsAudio');
     console.log("Seekbar Value:", document.getElementById("seekBar").value);
@@ -97,7 +107,16 @@ const startAutoScroll = () => {
     }, 100);
 }
 
-const loadHls = () => {
+// const syncPlayIcon = () => {
+//     var audio = document.getElementById('hlsAudio');
+//     if (!audio.paused) {
+//       setCurrentPlayIcon(i => playUrl);
+//     } else {
+//       setCurrentPlayIcon(i => pauseUrl);
+//     }
+  // }
+
+const loadHls = (songUrl) => {
     var audio = document.getElementById('hlsAudio');
     if (Hls.isSupported()) {
     var hls = new Hls();
@@ -109,19 +128,26 @@ const loadHls = () => {
         'manifest loaded, found ' + data.levels.length + ' quality level',
       );
     });
-    hls.loadSource('http://localhost:8080/outputlist.m3u8');
+    hls.loadSource(songUrl);
     // bind them together
     hls.attachMedia(audio);
+      setPlaying(p => true)
   }}
 
 useEffect(() => {
   console.log("REACT RE-RENDERING...")
-  loadHls();
+  // loadHls();
 },[]);
 
 useEffect(() => {
   console.log("playing is: ", playing)
+    // syncPlayIcon()
 },[playing]);
+
+useEffect(() => {
+    loadHls(currentSong);
+    // playOnLoad();
+},[currentSong]);
 
   return (
     <>
@@ -153,7 +179,7 @@ useEffect(() => {
             </div>
           </div>
 
-          <video id="hlsAudio" hidden={true} onPlay={startAutoScroll}></video>
+          <video id="hlsAudio" hidden={true} autoPlay onPlay={startAutoScroll}></video>
 
       </div>
 

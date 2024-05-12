@@ -1,6 +1,8 @@
 import './App.css'
 import Transport from './Transport'
+import Results from './Results'
 import Search from './Search'
+import {useState} from 'react';
 
 // import Transport from './Transport.jsx'
 
@@ -8,23 +10,45 @@ const playerLogo = "https://image.similarpng.com/very-thumbnail/2020/12/Popular-
 
 export default function App() {
 
+const passFoo = (val) => {
+  console.log(val)
+  }
+
+const setFooHandler = (val) => {
+    setFoo(f => val)
+  }
+
+const setSongsHandler = (obj) => {
+  console.log("Trying to set songs...")
+  console.log(obj)
+  if (obj != null) {
+    setSongs(s => obj)
+    }
+}
+
+const updateCurrentSongHandler = (val) => {
+    setCurrentSong(s => val)
+}
+
+  const [songs, setSongs] = useState([]);
+  const [foo, setFoo] = useState("");
+  const [currentSong, setCurrentSong] = useState("");
   return (
     <>
-      <Search />
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={playerLogo} className="logo" alt="Vite logo" />
-        </a>
-      </div>
-      <div>
-        <button className="logo" onClick={GetAudioData}>
-          <h4>Get audio</h4>
-        </button>
-        <audio id="player" src="data:audio/x-wav;base64"></audio>
-      </div>
-      <h1>Music Player</h1>
-      <HelloText />
-      <Transport />
+      <Search 
+        fooState={foo}
+        updateSongsHandler={setSongsHandler}
+        passFooHandler={passFoo}
+        setFooHandler={setFooHandler}
+      />
+      <Results 
+        songs={songs}
+        updateCurrentSongHandler={updateCurrentSongHandler}
+      />
+      <Transport 
+        currentSong={currentSong}
+      />
+
     </>
   )
 }
