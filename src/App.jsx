@@ -35,6 +35,7 @@ const updateCurrentSongHandler = (val) => {
   const [currentSong, setCurrentSong] = useState("");
   return (
     <>
+      <div className="bg-image">
       <Search 
         fooState={foo}
         updateSongsHandler={setSongsHandler}
@@ -48,7 +49,7 @@ const updateCurrentSongHandler = (val) => {
       <Transport 
         currentSong={currentSong}
       />
-
+    </div>
     </>
   )
 }

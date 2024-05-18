@@ -12,7 +12,10 @@ export default function Results({songs, updateCurrentSongHandler}) {
   } 
 
   const songList = songs.map(song => 
-    <li key={song["Id"]}><button onClick={() => loadSong(song["Url"])} className="songResult">{song["Name"]}</button></li>
+    <li className="parent" key={song["Id"]} onClick={() => loadSong(song["Url"])}>
+      <div className="nested songName">{song["Name"]}</div>
+      <div className="nested genreName">{song["Genre"]}</div>
+    </li>
   );
   const renderList = () => {
     console.log("here's your songs, fool")
