@@ -1,13 +1,13 @@
 import './Transport.css'
 import playButtonImg from './img/play-button.jpg'
 import pauseButtonImg from './img/pause-button.png'
+
 import { useState, useEffect } from 'react'
 import Hls from "hls.js"
 
 const seekForwardUrl = "http://icons.iconarchive.com/icons/icons8/windows-8/512/Media-Controls-Fast-Forward-icon.png"
 const seekBackwardUrl = "https://cdn0.iconfinder.com/data/icons/playback-1/24/rewind-512.png"
 
-const playFilepath = "./assets/play.png"
 
 export default function Transport({currentSongUrl, currentSongName}) {
 
@@ -34,7 +34,6 @@ const handlePlayClick = () => {
     console.log("Pausing...")
     audio.pause();
   }
-    // TODO: Add more stuff
 }
 
 const handlePlayChange = () => {
@@ -138,12 +137,10 @@ const loadHls = (songUrl) => {
 
 useEffect(() => {
   console.log("REACT RE-RENDERING...")
-  // loadHls();
 },[]);
 
 useEffect(() => {
   console.log("playing is: ", playing)
-    // syncPlayIcon()
 },[playing]);
 
 useEffect(() => {
