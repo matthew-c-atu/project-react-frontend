@@ -2,31 +2,27 @@ import './Results.css'
 import 'react'
 import { useEffect } from 'react'
 
-export default function Results({songs, updateCurrentSongHandler}) {
-
-  // make GET request to DB localhost:9002/songs
-  // provide some way of returning a list of divs in the return statement
-  const loadSong = (url) => {
+export default function Results({songs, updateCurrentSongUrlHandler, updateCurrentSongNameHandler}) {
+  const loadSong = (url, name) => {
     console.log("Loading " + url)
-    updateCurrentSongHandler(url)
+    updateCurrentSongUrlHandler(url)
+    updateCurrentSongNameHandler(name)
   } 
 
-  const songList = songs.map(song => 
-    <li key={song["Id"]}><button onClick={() => loadSong(song["Url"])} className="songResult">{song["Name"]}</button></li>
-  );
   const renderList = () => {
     console.log("here's your songs, fool")
     songs.forEach(song => {
 
       console.log(song["Name"]);
     });
-    // songList
-
   }
 
-  // const songArray = songs
-  //
-  // const listItems = songArray.map(song => <li>{song}</li>);
+  const songList = songs.map(song => 
+    <li className="parent" key={song["Id"]} onClick={() => loadSong(song["Url"], song["Name"])}>
+      <div className="nested songName">{song["Name"]}</div>
+      <div className="nested genreName">{song["Genre"]}</div>
+    </li>
+  );
 
   useEffect(() => {
     renderList(); 

@@ -3,7 +3,7 @@ input {
 }
 
 .resultsBg {
-  background-color: lightgray;
+  background-color: rgb(255, 255, 255, 10%);
   padding: 5px;
   height: 500px;
   max-height: 500px;
@@ -13,13 +13,59 @@ input {
 /* .resultsContainer {} */
 
 .songResult {
-  background-color: lightblue;
+  background-color: rgb(50, 50, 50, 20%);
   padding: 10px;
 }
 
 li {
-  background-color: lightblue;
-  padding: 5px;
-  border: lightblue;
+  display: grid;
+  column-count: 2;
+  text-align: center;
+}
 
+.parent {
+  background-color: rgb(50, 30, 120, 50%);
+  color: whitesmoke;
+  border: 2px solid;
+  border-radius: 10px;
+  padding: 15px;
+  margin: 2px;
+}
+
+.nested {
+  font-size: 1.5em;
+  border-color: grey;
+  font-style: bold;
+  font-weight: 500;
+  background-color: transparent
+}
+
+/* .nested:hover { */
+/*   background-color: grey; */
+/*   transition-duration: 0.2s; */
+/* } */
+
+.songName {
+  text-align: left;
+  grid-column: 1;
+}
+
+.genreName {
+  text-align: right;
+  grid-column: 2;
+}
+
+li:hover {
+  background-color: rgb(30, 20, 60, 80%);
+  transition-duration: 0.2s;
+}
+
+li:active {
+  background-color: rgb(200, 200, 200, 60%);
+  transition-duration: 0.2s;
+}
+
+ol li {
+  list-style-type: none;
+  /* text-align: left; */
 }

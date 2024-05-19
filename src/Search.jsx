@@ -1,47 +1,33 @@
 import './Search.css'
 import {useState} from 'react'
+import { useEffect } from 'react'
 
-export default function Search({fooState, updateSongsHandler, passFooHandler, setFooHandler}) {
-  const searchUrl = "https://icon-library.com/images/search-icon-png/search-icon-png-24.jpg"
+export default function Search({setSongsHandler}) {
   
-  var databaseUrl = "http://localhost:9002"
   var databaseSearchUrl = "http://localhost:9002/search"
 
+  const genres = [ "Drum and Bass", "House" ]
   const queryDatabase = (query) => {
 
-    let jsonObj;
-    const response = fetch(databaseSearchUrl + "?" + new URLSearchParams({name:query}), {
+    const response = fetch(databaseSearchUrl + "?" + new URLSearchParams({name:query, genre:searchGenre}), {
       method: "GET",
     })
     .then((response) => response.json())
     .then((json) => {
       console.log(json);
-      jsonObj = json;
-      updateSongsHandler(json);
+      setSongsHandler(json);
     }
     );
-
-    // console.log(typeof(jsonObj));
-    // console.log(jsonObj);
-
-    console.log("HERE IS FOOOOOOOOO")
-    passFooHandler("sdkfjksdlfjdskfsdfls")     
-
-    // updateSongsHandler(jsonObj);
-    setFooHandler("fooooo")
-
   }
 
-  // should this function be async?
-  const handleSearchClick = (query) => {
+  const handleSearchClick = () => {
     console.log("Search query executed.")
     const text = document.getElementById("searchTextBox");
     queryDatabase(text.value);
     text.value = "";
   }
 
-  
-  const handleTextSubmit = event => {
+  const handleTextSubmit = (event) => {
     console.log('handleSubmit ran');
     event.preventDefault(); 
 
@@ -51,20 +37,74 @@ export default function Search({fooState, updateSongsHandler, passFooHandler, se
 
   };
 
+  const handleDynamicSearch = (event) => {
+    event.preventDefault(); 
+
+    const text = document.getElementById("searchTextBox");
+    queryDatabase(text.value);
+
+  };
+
+  const handleChangeGenre = (genre) => {
+    console.log(genre);
+    setSearchGenre(g => genre);
+  }
+
+  const handleClearGenre = () => {
+    setSearchGenre(g => "");
+  }
+
+  const genreList = genres.map(genre => 
+    <li className="parent" onClick={() => handleChangeGenre(genre)}>
+      {genre}
+    </li>
+  );
+
+  useEffect(() => {
+    queryDatabase("")
+  },[]);
+
+  const [searchGenre, setSearchGenre] = useState("");
+
   return (
     <>
       <div className="searchBg">
+
         <div className="grid-container">
+
+        <div>
+
+            <div class="dropdown grid-item-search-genre">
+              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                  Genre
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li className="parent" onClick={() => handleClearGenre()}>
+                  Clear selection
+                </li>
+                  {genreList}
+              </ul>
+            </div>
+
+          <div className="searchGenre grid-item-search-genre-text">
+            {searchGenre}
+          </div>
+
+        </div>
+
+
           <form onSubmit={handleTextSubmit} id="songNameForm" className="grid-item-search-box">
-          <input id="searchTextBox" type="text" name="name" className="searchInput grid-item-search-box"/>
+          <input onKeyUpCapture={handleDynamicSearch} id="searchTextBox" type="text" name="name" className="searchInput grid-item-search-box" />
           </form>
-          <button onClick={handleSearchClick} className="grid-item-search-button">
-            <img src={searchUrl} alt="search button" className="searchButton round"/>
-          </button> 
+
+          <div className="grid-item-search-button">
+            <button onClick={handleSearchClick} className="searchButton">
+              Search
+            </button> 
+          </div>
+
         </div>
       </div>
     </>
   )
 }
-            // <img src={searchUrl} alt="search button" className="searchButton round"/>
-

@@ -1,22 +1,18 @@
 import './Transport.css'
+import playButtonImg from './img/play-button.jpg'
+import pauseButtonImg from './img/pause-button.png'
+
 import { useState, useEffect } from 'react'
 import Hls from "hls.js"
 
-const playUrl = "https://pluspng.com/img-png/play-button-png-play-button-icon-png-image-18904-512.png"
-const pauseUrl = "https://i.pinimg.com/originals/e5/96/0e/e5960e813b505af997f745cd5f5e23e9.png"
 const seekForwardUrl = "http://icons.iconarchive.com/icons/icons8/windows-8/512/Media-Controls-Fast-Forward-icon.png"
 const seekBackwardUrl = "https://cdn0.iconfinder.com/data/icons/playback-1/24/rewind-512.png"
 
-var hlsPlaylist="http://localhost:9001/Binary%20-%20Symptome.m3u8"
-// var hlsPlaylist="http://localhost:8080/hls/Binary%20-%20Symptome.m3u8"
 
-
-const playFilepath = "./assets/play.png"
-
-export default function Transport({currentSong}) {
+export default function Transport({currentSongUrl, currentSongName}) {
 
 const [playing, setPlaying] = useState(false)
-const [currentPlayIcon, setCurrentPlayIcon] = useState(playUrl)
+const [currentPlayIcon, setCurrentPlayIcon] = useState(pauseButtonImg);
 
 const togglePlaying = (val) => {
     setPlaying(current => val);
@@ -26,7 +22,7 @@ const handlePlayClick = () => {
   var audio = document.getElementById('hlsAudio');
   if (audio.paused) {
     togglePlaying(true);
-    setCurrentPlayIcon(pauseUrl);
+    setCurrentPlayIcon(pauseButtonImg);
     console.log("Playing...")
     console.log("playing is:", playing)
     audio.play();
@@ -34,11 +30,26 @@ const handlePlayClick = () => {
   }
   else {
     togglePlaying(false);
-    setCurrentPlayIcon(playUrl);
+    setCurrentPlayIcon(playButtonImg);
     console.log("Pausing...")
     audio.pause();
   }
-    // TODO: Add more stuff
+}
+
+const handlePlayChange = () => {
+  var audio = document.getElementById('hlsAudio');
+  // Play the audio
+  if (!playing) {
+    setPlaying(true)
+    setCurrentPlayIcon(pauseButtonImg);
+    audio.play();
+  }
+  // Pause the audio
+  else {
+    setPlaying(false)
+    setCurrentPlayIcon(playButtonImg);
+    audio.pause();
+  }
 }
 
 const handleSeekBackwardClick = () => {
@@ -65,11 +76,11 @@ const handleSeekMouseDown = () => {
 const handleSeekMouseUp = () => {
     var audio = document.getElementById('hlsAudio');
     var seekbar = document.getElementById("seekBar");
-    console.log("GOING TO NEW POSITION (Value is", seekbar.value, ")");
+    console.log("GOING TOwNEW POSITION (Value is", seekbar.value, ")");
     audio.currentTime = (audio.duration / 100) * seekbar.value;
-    console.log("AUDIO CURENTTIME IS", audio.currentTime);
-    setPlaying(true);
-    audio.play();
+    console.log("AUDIO CURRENTTIME IS", audio.currentTime);
+    // setPlaying(true);
+    // audio.play();
     handlePlayClick();
 }
 
@@ -107,15 +118,6 @@ const startAutoScroll = () => {
     }, 100);
 }
 
-// const syncPlayIcon = () => {
-//     var audio = document.getElementById('hlsAudio');
-//     if (!audio.paused) {
-//       setCurrentPlayIcon(i => playUrl);
-//     } else {
-//       setCurrentPlayIcon(i => pauseUrl);
-//     }
-  // }
-
 const loadHls = (songUrl) => {
     var audio = document.getElementById('hlsAudio');
     if (Hls.isSupported()) {
@@ -131,23 +133,20 @@ const loadHls = (songUrl) => {
     hls.loadSource(songUrl);
     // bind them together
     hls.attachMedia(audio);
-      setPlaying(p => true)
   }}
 
 useEffect(() => {
   console.log("REACT RE-RENDERING...")
-  // loadHls();
 },[]);
 
 useEffect(() => {
   console.log("playing is: ", playing)
-    // syncPlayIcon()
 },[playing]);
 
 useEffect(() => {
-    loadHls(currentSong);
-    // playOnLoad();
-},[currentSong]);
+    loadHls(currentSongUrl);
+},[currentSongUrl]);
+
 
   return (
     <>
@@ -156,19 +155,19 @@ useEffect(() => {
       <div className="grid-container">
 
           <div className="grid-item-seek-back">
-            <button type="button" className="btn btn-primary" onClick={handleSeekBackwardClick}>
+            <button type="button" className="buttonBg" onClick={handleSeekBackwardClick}>
               <img src={seekBackwardUrl} className="transportButton round" alt="seek backward button"/>
             </button>
           </div>
 
           <div className="grid-item-play">
-            <button className="btn btn-primary" alt="play button" onClick={handlePlayClick}>
+            <button className="buttonBg" alt="play button" onClick={handlePlayClick}>
               <img src={currentPlayIcon} className="transportButton round"/>
             </button>
           </div>
 
           <div className="grid-item-seek-forward">
-            <button type="button" className="btn btn-primary" onClick={handleSeekForwardClick}>
+            <button type="button" className="buttonBg" onClick={handleSeekForwardClick}>
               <img src={seekForwardUrl} className="transportButton round" alt="seek forward button"/>
             </button>
           </div>
@@ -179,7 +178,16 @@ useEffect(() => {
             </div>
           </div>
 
+          <div className="nowPlayingText grid-item-now-playing">
+            Now Playing:
+          </div>
+
+          <div className="nowPlaying nowPlayingText grid-item-now-playing-name">
+            {currentSongName}
+          </div>
+
           <video id="hlsAudio" hidden={true} autoPlay onPlay={startAutoScroll}></video>
+          
 
       </div>
 
