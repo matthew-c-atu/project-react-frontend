@@ -4,12 +4,14 @@ import { useEffect } from 'react'
 
 export default function Search({setSongsHandler}) {
   
-  var databaseSearchUrl = "http://localhost:9002/search"
+  var databaseSearchUrl = "http://host.docker.internal:9002"
+  // var databaseSearchUrl = "http://localhost:9002"
+  // var databaseSearchUrl = process.env.DB_SEARCH_URL;
 
   const genres = [ "Drum and Bass", "House" ]
   const queryDatabase = (query) => {
 
-    const response = fetch(databaseSearchUrl + "?" + new URLSearchParams({name:query, genre:searchGenre}), {
+    const response = fetch(databaseSearchUrl + "/search?" + new URLSearchParams({name:query, genre:searchGenre}), {
       method: "GET",
     })
     .then((response) => response.json())
