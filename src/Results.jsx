@@ -9,10 +9,8 @@ export default function Results({songs, updateCurrentSongUrlHandler, updateCurre
     updateCurrentSongNameHandler(name)
   } 
 
-  const renderList = () => {
-    console.log("here's your songs, fool")
+  const printList = () => {
     songs.forEach(song => {
-
       console.log(song["Name"]);
     });
   }
@@ -25,7 +23,7 @@ export default function Results({songs, updateCurrentSongUrlHandler, updateCurre
   );
 
   useEffect(() => {
-    renderList(); 
+    printList(); 
   },[songs]);
 
   return(

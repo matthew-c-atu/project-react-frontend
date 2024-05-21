@@ -76,11 +76,9 @@ const handleSeekMouseDown = () => {
 const handleSeekMouseUp = () => {
     var audio = document.getElementById('hlsAudio');
     var seekbar = document.getElementById("seekBar");
-    console.log("GOING TOwNEW POSITION (Value is", seekbar.value, ")");
+    // console.log("GOING TO NEW POSITION (Value is", seekbar.value, ")");
     audio.currentTime = (audio.duration / 100) * seekbar.value;
-    console.log("AUDIO CURRENTTIME IS", audio.currentTime);
-    // setPlaying(true);
-    // audio.play();
+    // console.log("AUDIO CURRENT TIME IS", audio.currentTime);
     handlePlayClick();
 }
 
@@ -93,14 +91,14 @@ const handleSeekMouseUp = () => {
 
 const handleSeekMove = () => {
     var audio = document.getElementById('hlsAudio');
-    console.log("Seekbar Value:", document.getElementById("seekBar").value);
+    // console.log("Seekbar Value:", document.getElementById("seekBar").value);
 }
 
 const autoScrollSeek = () => {
       var audio = document.getElementById('hlsAudio');
       var seekbar = document.getElementById("seekBar");
       var newVal = (audio.currentTime / audio.duration) * 100;
-      console.log("Updating seek bar to", newVal, "...");
+      // console.log("Updating seek bar to", newVal, "...");
       seekbar.value = newVal;
   }
 
@@ -108,11 +106,11 @@ const autoScrollSeek = () => {
 const startAutoScroll = () => {
       var autoScrollIntervalId = setInterval(() => {
         var audio = document.getElementById('hlsAudio');
-        console.log("updating...", "playing ==", !audio.paused)
+        // console.log("updating...", "playing ==", !audio.paused)
         if (!audio.paused) {
           autoScrollSeek();
         } else {
-          console.log("clearing interval id ", autoScrollIntervalId)
+          // console.log("clearing interval id ", autoScrollIntervalId)
           clearInterval(autoScrollIntervalId);
         }
     }, 100);
