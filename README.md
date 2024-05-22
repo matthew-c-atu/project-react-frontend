@@ -4,6 +4,12 @@
 The ReactJS frontend service for the final project music player web app.
 Uses React and Vite.
 
+The CI pipeline pushes a Docker image to: https://hub.docker.com/repository/docker/matthewatu/project-react-frontend/general
+This can be pulled easily with Docker compose, see: https://github.com/matthew-c-atu/project-app-local
+
+Note that the Docker compose environment does not work.
+
+Read usage below for instructions on how to run the app.
 
 # USAGE
 The below steps describe how to run the entire suite of services in order to run the web app locally.
